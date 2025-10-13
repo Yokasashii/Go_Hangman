@@ -93,9 +93,9 @@ func Menu(Word *[]rune, WordTry []rune, Try int) {
 	reader := bufio.NewReader(os.Stdin)
 
 	for {
-		fmt.Println("1 - Jouer")
-		fmt.Println("2 - Quitter")
-		fmt.Print("Choisis une option : ")
+		fmt.Println("1 - Play")
+		fmt.Println("2 - Leave")
+		fmt.Print("Select an option : ")
 
 		Input, _ := reader.ReadString('\n')
 		Choice := strings.TrimSpace(Input)
@@ -110,7 +110,7 @@ func Menu(Word *[]rune, WordTry []rune, Try int) {
 			os.Exit(0)
 		default:
 			ClearScreen()
-			fmt.Println("Ton choix n'est pas correct retry !")
+			fmt.Println("Your choice is incorrect. Please try again !")
 		}
 	}
 }
@@ -132,7 +132,7 @@ func Game(Word []rune, WordTry *[]rune, Try *int) {
 		╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝`, "\033[0m")
 		PrintHangman(Try)
 		fmt.Println(strings.ToTitle(string(GameWord)))
-		fmt.Println("Vous avez deja marquer : ", string(*WordTry))
+		fmt.Println("You already wrote : ", string(*WordTry))
 		TapeLetter := ScanKeyboard(*WordTry)
 		*WordTry = append(*WordTry, TapeLetter)
 		if VerifLetter(TapeLetter, Word) {
@@ -149,12 +149,11 @@ func Game(Word []rune, WordTry *[]rune, Try *int) {
 
 func CreatWord() string {
 	Dictionnaire := []string{
-		"arbre", "avion", "banjo", "beaux", "blanc", "bleus", "boute", "bruit", "carte",
-		"chaud", "chien", "choix", "cinqs", "clair", "coeur", "corps", "cours", "crane",
-		"dents", "droit", "ecran", "fleur", "force", "fruit", "geste", "glace", "grand",
-		"jouer", "livre", "lundi", "mains", "merde", "motif", "neige", "noire", "nuage",
-		"paris", "pelle", "perle", "piano", "plage", "pluie", "poche", "porte", "riree",
-		"rouge", "sable", "table", "faims", "pause", "vague",
+		"apple", "bread", "chair", "table", "light", "water", "house", "grass", "music", "plant",
+		"beach", "cloud", "heart", "smile", "sound", "sweet", "dream", "fruit", "drink", "sleep",
+		"laugh", "world", "night", "dress", "stone", "floor", "green", "white", "black", "brown",
+		"happy", "watch", "story", "river", "money", "dance", "sugar", "honey", "storm", "month",
+		"hands", "earth", "place", "train", "drive", "glass", "space", "ocean", "grass", "round",
 	}
 	return Dictionnaire[rand.Intn(50)]
 }
@@ -165,11 +164,9 @@ func PrintHangman(Try *int) {
 
 func ScanKeyboard(WordTry []rune) rune {
 	scanner := bufio.NewScanner(os.Stdin)
-	// Créer un nouveau scanner
-	fmt.Print("Tapes une lettre : ")
+	fmt.Print("Type a letter : ")
 	scanner.Scan()
 	input := scanner.Text()
-	// Gère le texte écrit
 	input = strings.TrimSpace(input)
 	input = strings.ToLower(input)
 	if len(input) == 1 {
@@ -178,11 +175,11 @@ func ScanKeyboard(WordTry []rune) rune {
 		if letter >= 'a' && letter <= 'z' {
 			return letter
 		} else {
-			fmt.Println("Tu dois écrire une lettre")
+			fmt.Println("You must write one letter.")
 			return 0
 		}
 	} else {
-		fmt.Println("Tu dois écrire une lettre")
+		fmt.Println("You must write one letter.")
 		return 0
 	}
 }
@@ -203,7 +200,7 @@ func ClearScreen() {
 func GameOver(Word []rune, GameWord []rune, Try *int) bool {
 	if string(Word) == string(GameWord) {
 		ClearScreen()
-		fmt.Println("Vous avez gagné car le mot était", "\033[35m"+strings.ToTitle(string(Word))+"\033[0m")
+		fmt.Println("You won because the word was", "\033[35m"+strings.ToTitle(string(Word))+"\033[0m")
 		fmt.Println("\033[32m", `
 	██╗   ██╗ ██████╗ ██╗   ██╗    ██╗    ██╗██╗███╗   ██╗
         ╚██╗ ██╔╝██╔═══██╗██║   ██║    ██║    ██║██║████╗  ██║
@@ -214,7 +211,7 @@ func GameOver(Word []rune, GameWord []rune, Try *int) bool {
 		return true
 	} else if *Try == 0 {
 		ClearScreen()
-		fmt.Println("Vous avez perdu c'est GameOver car le mot était", "\033[35m"+strings.ToTitle(string(Word))+"\033[0m", "c'est ciao kobuchaw")
+		fmt.Println("You lost, it's Game Over because the word was", "\033[35m"+strings.ToTitle(string(Word))+"\033[0m", "it's ciao kombucha")
 		fmt.Println("\033[31m", `
 		 ██████╗  █████╗ ███╗   ███╗███████╗     ██████╗ ██╗   ██╗███████╗██████╗ 
 		██╔════╝ ██╔══██╗████╗ ████║██╔════╝    ██╔═══██╗██║   ██║██╔════╝██╔══██╗
