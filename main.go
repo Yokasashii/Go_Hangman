@@ -75,6 +75,8 @@ var Hangman = []string{
 	`,
 }
 
+var WinStreak = 0
+
 func main() {
 	var Word = []rune(CreatWord())
 	var WordTry []rune
@@ -130,6 +132,7 @@ func Game(Word []rune, WordTry *[]rune, Try *int) {
 		██╔══██║██╔══██║██║╚██╗██║██║   ██║██║╚██╔╝██║██╔══██║██║╚██╗██║
 		██║  ██║██║  ██║██║ ╚████║╚██████╔╝██║ ╚═╝ ██║██║  ██║██║ ╚████║
 		╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝`, "\033[0m")
+		fmt.Println("WinStreak :", WinStreak)
 		PrintHangman(Try)
 		fmt.Println(strings.ToTitle(string(GameWord)))
 		fmt.Println("You already wrote : ", string(*WordTry))
@@ -200,6 +203,7 @@ func ClearScreen() {
 func GameOver(Word []rune, GameWord []rune, Try *int) bool {
 	if string(Word) == string(GameWord) {
 		ClearScreen()
+		WinStreak = WinStreak + 1
 		fmt.Println("You won because the word was", "\033[35m"+strings.ToTitle(string(Word))+"\033[0m")
 		fmt.Println("\033[32m", `
 	██╗   ██╗ ██████╗ ██╗   ██╗    ██╗    ██╗██╗███╗   ██╗
@@ -211,6 +215,7 @@ func GameOver(Word []rune, GameWord []rune, Try *int) bool {
 		return true
 	} else if *Try == 0 {
 		ClearScreen()
+		WinStreak = 0
 		fmt.Println("You lost, it's Game Over because the word was", "\033[35m"+strings.ToTitle(string(Word))+"\033[0m", "it's ciao kombucha")
 		fmt.Println("\033[31m", `
 		 ██████╗  █████╗ ███╗   ███╗███████╗     ██████╗ ██╗   ██╗███████╗██████╗ 
